@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Organizations</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row m-4">
+        <div class="col text-center border border-dark">
+            <h1><a href="homepage" class="text-dark">Superhero & Villain Tracker</a></h1>
+        </div>
+    </div>
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-3">
+            <a href="addresses" class="btn btn-outline-primary btn-lg">Addresses</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="members" class="btn btn-outline-primary btn-lg">Members</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="powers" class="btn btn-outline-primary btn-lg">Powers</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="organizations" class="btn btn-outline-primary btn-lg">Organizations</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
+        </div>
+    </div>
+
+
+
+    <div class="row m-4 border border-dark">
+        <div class="col-3 text-center m-3">
+            <span class="h3">Add an Organization</span>
+        </div>
+        <div class="col-7 text-center m-3">
+            <form action="/addOrganizations" method="POST">
+
+
+                <div class="form-group row">
+                    <label for="org_name" class="col-3 col-form-label">
+                        Name</label>
+                    <div class="col-9">
+                        <input type="text" name="org_name"
+                               id="org_name" class="form-control"/>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="org_description" class="col-3 col-form-label">
+                        Description</label>
+                    <div class="col-9">
+                        <input type="text" name="org_description"
+                               id="org_description" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="phone" class="col-3 col-form-label">
+                        Phone Number</label>
+                    <div class="col-9">
+                        <input type="text" name="phone"
+                               id="phone" class="form-control"/>
+                    </div>
+                </div>
+                <!--below is a drop-down to choose an address-->
+                <div class="form-group row">
+                    <label for="add_id" class="col-3 col-form-label">
+                        Address</label>
+                    <div class="col-9">
+                        <select class="form-control" id="add_id" name="add_id">
+                            <option th:each="address : ${addresses}" th:value="${address.add_id}" th:text="${address.city}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Organization</button>
+            </form>
+        </div>
+    </div>
+
+    <!--lists out all the organizations we added along with details about them-->
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-3">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Organization ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Phone Number</th>
+                    <th>Address ID</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="organization : ${organizations}">
+                    <td th:text="${organization.org_id}"></td>
+                    <td th:text="${organization.org_name}"></td>
+                    <td th:text="${organization.org_description}"></td>
+                    <td th:text="${organization.phone}"></td>
+                    <td th:text="${organization.add_id}"></td>
+                    <td><a href="#" th:href="@{/editOrganization(org_id=${organization.org_id})}">Edit</a></td>
+                    <td><a href="#" th:href="@{/deleteOrganization(org_id=${organization.org_id})}">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
